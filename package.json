@@ -10,8 +10,15 @@
     "run-android": "react-native run-android"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "react": "16.8.3",
-    "react-native": "0.59.10"
+    "react-native": "0.59.10",
+    "react-native-gesture-handler": "^1.4.0",
+    "react-native-reanimated": "^1.2.0",
+    "react-navigation": "^3.11.1",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",

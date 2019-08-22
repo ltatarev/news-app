@@ -1,49 +1,59 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+/*
+import { AsyncStorage } from "react-native";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { PersistGate } from "redux-persist/lib/integration/react";
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
+import rootReducer from "./src/reducers";
+
+const logger = createLogger();
+
+const persistConfig = {
+  key: "root",
+  storage,
+  stateReconciler: autoMergeLevel2
+};
+
+const pReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = createStore(pReducer, applyMiddleware(logger));
+export const persistor = persistStore(store);
+ persistor.purge(); 
+
+// * Navigation persist
+const persistenceKey = "persistenceKey";
+const persistNavigationState = async navState => {
+  try {
+    await AsyncStorage.setItem(persistenceKey, JSON.stringify(navState));
+  } catch (err) {
+    // error
   }
-}
+};
+const loadNavigationState = async () => {
+  const jsonString = await AsyncStorage.getItem(persistenceKey);
+  return JSON.parse(jsonString);
+};*/
+
+const App = () => (
+  <View style={styles.container}>
+    <Text>News</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
+
+export default App;
