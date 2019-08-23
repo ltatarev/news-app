@@ -1,6 +1,7 @@
+/* // * CALLING API FROM SERVICE
 import api from "./api";
 
-async function newsServiceAsync() {
+ async function newsServiceAsync() {
   try {
     const response = await api.getLiveNews();
     return response;
@@ -10,19 +11,19 @@ async function newsServiceAsync() {
 }
 newsServiceAsync().then(resp => {
   newsService(resp);
-});
+}); */
 
 // * final articles array & shouldRefresh param
 let articles = [];
 let shouldRefresh = true;
 
-async function newsService(liveNews) {
+function newsService(liveNews) {
   if (liveNews != undefined) {
     // * check if news need to be refreshed
     shouldRefresh = liveNews.createdAt - Date.now() > 10 * 60 * 1000;
     // * parse articles and push into articles array
     liveNews.articles.forEach(parseArticle);
-    console.log(articles);
+    // console.log(articles);
     return { articles, shouldRefresh };
   } else {
     let now = Date.now();
@@ -48,7 +49,6 @@ function parseArticle(article) {
       case "source":
         parsedArticle["source"] = article[key].name;
         break;
-
       default:
         parsedArticle[key] = article[key];
         break;

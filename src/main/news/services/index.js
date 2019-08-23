@@ -1,7 +1,9 @@
-import newsServiceAsync from "./newsService";
+import newsService from "./newsService";
+import api from "./api";
 
 const services = {
-  newsServiceAsync
+  newsService,
+  api
 };
 
 export default services;
