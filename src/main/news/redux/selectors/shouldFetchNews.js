@@ -5,7 +5,7 @@ const shouldFetchNews = state => {
     const lastTimeRecieved = obj.recievedAt;
     if (lastTimeRecieved != null) {
       const tenMinutes = 10 * 60 * 1000;
-      return lastTimeRecieved - Date.now() > tenMinutes;
+      return Date.now() - lastTimeRecieved > tenMinutes;
     }
   } else {
     return true;

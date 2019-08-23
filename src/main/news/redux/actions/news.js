@@ -31,7 +31,7 @@ function fetchNews() {
 }
 
 function fetchNewsIfNeeded() {
-  console.log("fetchNewsIfNeeded called");
+  console.log("Fetching news...");
   return (dispatch, getState) => {
     if (selectors.shouldFetchNews(getState())) {
       console.log("selector: ", selectors.shouldFetchNews(getState()));
