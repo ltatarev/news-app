@@ -5,6 +5,8 @@ import { persistor, store } from "./src/configureStore";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 
+import HomeScreen from "./src/main/news/fragments/screens/homeScreen";
+
 // * Navigation persist
 /* const persistenceKey = "persistenceKey";
 const persistNavigationState = async navState => {
@@ -20,13 +22,13 @@ const loadNavigationState = async () => {
   return JSON.parse(jsonString);
 };*/
 
-persistor.purge();
+// persistor.purge();
 
 const App = () => (
   <View style={styles.container}>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Text>News</Text>
+        <HomeScreen />
       </PersistGate>
     </Provider>
   </View>

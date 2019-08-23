@@ -1,6 +1,6 @@
 import { REQUEST_NEWS, RECIEVE_NEWS } from "../actions/actionTypes";
 
-function newsReducer(
+export function newsReducer(
   state = {
     isFetching: false,
     news: []

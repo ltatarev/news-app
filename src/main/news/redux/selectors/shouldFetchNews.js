@@ -1,7 +1,8 @@
-export const shouldFetchNews = state => {
-  if (state.recievedAtReducer) {
-    const lastTimeRecieved = state.recievedAtReducer.recievedAt;
-
+const shouldFetchNews = state => {
+  let obj = state.recievedAtReducer;
+  let empty = Object.entries(obj).length === 0 && obj.constructor === Object;
+  if (!empty) {
+    const lastTimeRecieved = obj.recievedAt;
     if (lastTimeRecieved != null) {
       const tenMinutes = 10 * 60 * 1000;
       return lastTimeRecieved - Date.now() > tenMinutes;
@@ -10,3 +11,5 @@ export const shouldFetchNews = state => {
     return true;
   }
 };
+
+export default shouldFetchNews;

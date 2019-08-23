@@ -1,7 +1,7 @@
-import news from "./news";
+import fetchNewsIfNeeded from "./news";
 
 const actions = {
-  news
+  fetchNewsIfNeeded
 };
 
-export const actions;
+export default actions;

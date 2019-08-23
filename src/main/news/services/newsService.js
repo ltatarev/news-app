@@ -15,16 +15,13 @@ newsServiceAsync().then(resp => {
 
 // * final articles array & shouldRefresh param
 let articles = [];
-let shouldRefresh = true;
 
 function newsService(liveNews) {
   if (liveNews != undefined) {
-    // * check if news need to be refreshed
-    shouldRefresh = liveNews.createdAt - Date.now() > 10 * 60 * 1000;
     // * parse articles and push into articles array
     liveNews.articles.forEach(parseArticle);
     // console.log(articles);
-    return { articles, shouldRefresh };
+    return articles;
   } else {
     let now = Date.now();
     return { error: "Error occured", createdAt: now };
@@ -44,9 +41,9 @@ function parseArticle(article) {
         parsedArticle["date"] = parseDate(articlePublishedAt);
         break;
       case "description":
-      case "url":
         break;
       case "source":
+        console.log(article[key].name);
         parsedArticle["source"] = article[key].name;
         break;
       default:

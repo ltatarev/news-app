@@ -1,5 +1,11 @@
 import shouldFetchNews from "./shouldFetchNews";
+import getNews from "./getNews";
+import getFetching from "./getFetching";
 
-export const selectors = {
-  shouldFetchNews
+const selectors = {
+  shouldFetchNews,
+  getNews,
+  getFetching
 };
+
+export default selectors;

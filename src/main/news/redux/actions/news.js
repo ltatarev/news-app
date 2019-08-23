@@ -1,7 +1,7 @@
 import { REQUEST_NEWS, RECIEVE_NEWS } from "./actionTypes";
 
 import services from "../../services";
-import selectors from "../../selectors";
+import selectors from "../selectors";
 
 function requestNews() {
   return {
@@ -12,8 +12,10 @@ function requestNews() {
 function recieveNews(news) {
   return {
     type: RECIEVE_NEWS,
-    news: services.newsService(news),
-    recievedAt: Date.now()
+    payload: {
+      news: news,
+      recievedAt: Date.now()
+    }
   };
 }
 
@@ -23,20 +25,21 @@ function fetchNews() {
 
     return services.api
       .getLiveNews()
-      .then(
-        response => response.json(),
-        error => console.log("An error occurred.", error)
-      )
-      .then(json => dispatch(recieveNews(json)));
+      .then(response => response.articles)
+      .then(articles => dispatch(recieveNews(articles)));
   };
 }
 
-export function fetchNewsIfNeeded() {
+function fetchNewsIfNeeded() {
+  console.log("fetchNewsIfNeeded called");
   return (dispatch, getState) => {
     if (selectors.shouldFetchNews(getState())) {
+      console.log("selector: ", selectors.shouldFetchNews(getState()));
       return dispatch(fetchNews());
     } else {
       return Promise.resolve();
     }
   };
 }
+
+export default fetchNewsIfNeeded;
