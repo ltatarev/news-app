@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
 import newsReducer from "./newsReducer";
-import recievedAtReducer from "./recievedAtReducer";
+import receivedAtReducer from "./receivedAtReducer";
 
 const rootReducer = combineReducers({
   newsReducer,
-  recievedAtReducer
+  receivedAtReducer
 });
 
 export default rootReducer;

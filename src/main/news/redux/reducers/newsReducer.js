@@ -1,22 +1,27 @@
-import { REQUEST_NEWS, RECIEVE_NEWS } from "../actions/actionTypes";
+import {
+  REQUEST_NEWS_ACTION,
+  RECEIVE_NEWS_ACTION,
+  RECEIVE_NEWS_FAILED_ACTION
+} from "../actions/actionTypes";
 
 export function newsReducer(
   state = {
     isFetching: false,
+    error: {},
     news: []
   },
   action
 ) {
   switch (action.type) {
-    case REQUEST_NEWS:
-      return Object.assign({}, state, {
-        isFetching: true
-      });
-    case RECIEVE_NEWS:
-      return Object.assign({}, state, {
+    case REQUEST_NEWS_ACTION:
+      return { ...state, isFetching: true };
+    case RECEIVE_NEWS_ACTION:
+      return {
         isFetching: false,
         news: action.payload.news
-      });
+      };
+    case RECEIVE_NEWS_FAILED_ACTION:
+      return { ...state, isFetching: false, error: action.payload.error };
     default:
       return state;
   }

@@ -1,8 +1,10 @@
-import newsService from "./newsService";
-import api from "./api";
+import parseArticle from "./renderNewsForState";
+import { api, getLiveNews } from "./api";
+
+export { parseArticle, api, getLiveNews };
 
 const services = {
-  newsService,
+  parseArticle,
   api
 };
 

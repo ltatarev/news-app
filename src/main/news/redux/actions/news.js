@@ -1,20 +1,44 @@
-import { REQUEST_NEWS, RECIEVE_NEWS } from "./actionTypes";
+import {
+  INITIAL_REQUEST_ACTION,
+  REQUEST_NEWS_ACTION,
+  RECEIVE_NEWS_ACTION,
+  RECEIVE_NEWS_FAILED_ACTION
+} from "./actionTypes";
 
-import services from "../../services";
-import selectors from "../selectors";
+import { getLiveNews, parseArticle } from "../../services";
 
-function requestNews() {
+// * Action dispatched from screen on user request
+function initialRequest() {
   return {
-    type: REQUEST_NEWS
+    type: INITIAL_REQUEST_ACTION
   };
 }
 
-function recieveNews(news) {
+// * Action dispatched when fetching live news starts
+function requestNews() {
   return {
-    type: RECIEVE_NEWS,
+    type: REQUEST_NEWS_ACTION
+  };
+}
+
+// * Action dispatched upon receiving news from API
+function receiveNews(news) {
+  return {
+    type: RECEIVE_NEWS_ACTION,
     payload: {
       news: news,
-      recievedAt: Date.now()
+      receivedAt: Date.now()
+    }
+  };
+}
+
+// * Action dispatched in case of error in API request
+function receiveNewsFailed(error) {
+  return {
+    type: RECEIVE_NEWS_FAILED_ACTION,
+    payload: {
+      error,
+      receivedAt: Date.now()
     }
   };
 }
@@ -22,24 +46,24 @@ function recieveNews(news) {
 function fetchNews() {
   return function(dispatch) {
     dispatch(requestNews());
-
-    return services.api
-      .getLiveNews()
-      .then(response => response.articles)
-      .then(articles => dispatch(recieveNews(articles)));
+    return getLiveNews()
+      .then(response => {
+        const { articles } = response;
+        const articlesForDispatch = articles.map(article =>
+          parseArticle(article)
+        );
+        dispatch(receiveNews(articlesForDispatch));
+      })
+      .catch(error => dispatch(receiveNewsFailed(error)));
   };
 }
 
-function fetchNewsIfNeeded() {
-  console.log("Fetching news...");
-  return (dispatch, getState) => {
-    if (selectors.shouldFetchNews(getState())) {
-      console.log("selector: ", selectors.shouldFetchNews(getState()));
-      return dispatch(fetchNews());
-    } else {
-      return Promise.resolve();
-    }
-  };
-}
+export {
+  requestNews,
+  receiveNews,
+  receiveNewsFailed,
+  fetchNews,
+  initialRequest
+};
 
-export default fetchNewsIfNeeded;
+export default fetchNews;

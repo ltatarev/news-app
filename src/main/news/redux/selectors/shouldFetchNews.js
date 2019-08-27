@@ -1,11 +1,15 @@
+import getReceivedAt from "./getReceivedAt";
+const _ = require("lodash");
+
+const tenMinutes = 10;
+
 const shouldFetchNews = state => {
-  let obj = state.recievedAtReducer;
-  let empty = Object.entries(obj).length === 0 && obj.constructor === Object;
+  let obj = getReceivedAt(state);
+  let empty = _.isEmpty(obj);
   if (!empty) {
-    const lastTimeRecieved = obj.recievedAt;
-    if (lastTimeRecieved != null) {
-      const tenMinutes = 10 * 60 * 1000;
-      return Date.now() - lastTimeRecieved > tenMinutes;
+    const { receivedAt } = obj;
+    if (receivedAt) {
+      return Date.now() - receivedAt > tenMinutes;
     }
   } else {
     return true;

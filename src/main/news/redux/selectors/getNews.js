@@ -1,5 +1,5 @@
 const getNews = state => {
-  return state.newsReducer;
+  return state.newsReducer.news;
 };
 
 export default getNews;
