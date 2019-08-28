@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-
-import FeatherIcon from "react-native-vector-icons/Feather";
-
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
-
+import FeatherIcon from "react-native-vector-icons/Feather";
 import PropTypes from "prop-types";
 
 import styles from "../errorComponent/errorComponent";
@@ -30,7 +27,7 @@ class ListEmpty extends Component {
   };
 
   render() {
-    const text = "No news available at this moment. Please try again later.";
+    const text = "No news available at this moment. Please try.";
     return (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyText}>{text}</Text>

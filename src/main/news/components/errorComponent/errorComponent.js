@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { Text, ImageBackground, TouchableOpacity, View } from "react-native";
-
-import styles from "./errorComponentStyles";
-
-import FeatherIcon from "react-native-vector-icons/Feather";
-
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 
 import PropTypes from "prop-types";
+import FeatherIcon from "react-native-vector-icons/Feather";
+import styles from "./errorComponentStyles";
 
 import { initialRequest } from "../../redux/actions";
 
@@ -34,7 +31,7 @@ class ErrorComponent extends Component {
   }
 
   render() {
-    const { text } = this.props;
+    const text = "There was a problem receiving news. Please try again.";
 
     return (
       <View style={styles.emptyContainer}>

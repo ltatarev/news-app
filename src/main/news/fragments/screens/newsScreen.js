@@ -2,16 +2,13 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
-
+import FeatherIcon from "react-native-vector-icons/Feather";
 import PropTypes from "prop-types";
-
-// * Styles
-import styles from "../styles";
 
 // * child components
 import { ArticleCover, ArticleTitle } from "../../components";
 
-import FeatherIcon from "react-native-vector-icons/Feather";
+import styles from "../styles";
 
 class NewsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -61,7 +58,7 @@ class NewsScreen extends Component {
   }
 
   render() {
-    const { news, isFetching } = this.state;
+    const { news } = this.state;
     const {
       urlToImage,
       title,

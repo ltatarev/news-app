@@ -17,7 +17,7 @@ import {
   LoadingModal
 } from "../../components";
 
-// * Styles
+// * styles
 import styles from "../styles";
 
 class HomeScreen extends Component {
@@ -68,13 +68,8 @@ class HomeScreen extends Component {
 
     if (isFetching) return <LoadingModal isFetching={isFetching} />;
 
-    // * if there was an error after api call
-    if (error && calledApi)
-      return (
-        <ErrorComponent
-          text={"There was a problem receiving news. Please try again later."}
-        />
-      );
+    // * error after api call
+    if (error && calledApi) return <ErrorComponent />;
 
     return (
       <View style={styles.container}>

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Image, Animated, View, ImageBackground } from "react-native";
+import { ImageBackground } from "react-native";
+
 import FastImage from "react-native-fast-image";
+
 import styles from "./articleCoverStyles";
 
 class ArticleCover extends Component {

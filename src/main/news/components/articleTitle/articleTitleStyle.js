@@ -7,6 +7,15 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     zIndex: 100
   },
+  description: {
+    flex: 1,
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 10,
+    marginLeft: 50,
+    marginRight: 50
+  },
   text: {
     flex: 1,
     flexWrap: "wrap",
@@ -31,15 +40,6 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
     fontFamily: "Avenir"
-  },
-  description: {
-    flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingTop: 10,
-    marginLeft: 50,
-    marginRight: 50
   }
 });
 
