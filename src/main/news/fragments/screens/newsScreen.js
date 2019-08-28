@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import styles from "../styles";
 
 // * child components
-import { LoadingModal, ArticleCover, ArticleTitle } from "../../components";
+import { ArticleCover, ArticleTitle } from "../../components";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 
@@ -38,8 +38,7 @@ class NewsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      news: this.getNavigationParams(),
-      isFetching: true
+      news: this.getNavigationParams()
     };
   }
 
@@ -59,7 +58,6 @@ class NewsScreen extends Component {
     navigation.setParams({
       title: news.shortTitle
     });
-    this.setState({ isFetching: false });
   }
 
   render() {
@@ -73,8 +71,6 @@ class NewsScreen extends Component {
       content,
       description
     } = news;
-
-    if (isFetching) return <LoadingModal isFetching={isFetching} />;
 
     return (
       <View style={{ flexDirection: "column", flex: 1 }}>

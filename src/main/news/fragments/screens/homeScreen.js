@@ -68,6 +68,7 @@ class HomeScreen extends Component {
 
     if (isFetching) return <LoadingModal isFetching={isFetching} />;
 
+    // * if there was an error after api call
     if (error && calledApi)
       return (
         <ErrorComponent
@@ -81,11 +82,7 @@ class HomeScreen extends Component {
           data={news}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
-          ListEmptyComponent={
-            <ErrorComponent
-              text={"No news available at this moment. Please try again later."}
-            />
-          }
+          ListEmptyComponent={<ListEmpty />}
         />
       </View>
     );
