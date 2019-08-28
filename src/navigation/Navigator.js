@@ -1,7 +1,6 @@
 import { createAppContainer, createStackNavigator } from "react-navigation";
 
-import HomeScreen from "../main/news/fragments/screens/homeScreen";
-import NewsScreen from "../main/news/fragments/screens/newsScreen";
+import { HomeScreen, NewsScreen } from "../main/news/fragments/screens";
 
 const AppNavigator = createStackNavigator(
   {

@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View } from "react-native";
 
 import { persistor, store } from "./src/configureStore";
 import { Provider } from "react-redux";
@@ -10,21 +9,13 @@ import Navigator from "./src/navigation/Navigator";
 class App extends PureComponent {
   render() {
     return (
-      <View style={styles.container}>
-        <Provider store={store}>
-          <PersistGate persistor={persistor}>
-            <Navigator />
-          </PersistGate>
-        </Provider>
-      </View>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <Navigator />
+        </PersistGate>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
 export default App;

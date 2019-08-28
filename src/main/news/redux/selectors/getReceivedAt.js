@@ -1,5 +1,5 @@
 const getReceivedAt = state => {
-  return state.receivedAtReducer;
+  return state.receivedAtReducer.receivedAt;
 };
 
 export default getReceivedAt;
