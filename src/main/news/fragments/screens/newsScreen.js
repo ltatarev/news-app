@@ -4,8 +4,6 @@ import { Text, TouchableOpacity, Share, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 
-import FeatherIcon from "react-native-vector-icons/Feather";
-
 import PropTypes from "prop-types";
 
 import { getNews } from "../../redux/selectors";
@@ -18,27 +16,6 @@ import { ScrollView } from "react-native-gesture-handler";
 
 class NewsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: (
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-        <Text style={{ paddingLeft: 20 }}>
-          <FeatherIcon name="arrow-left" size={27} color="white" />
-        </Text>
-      </TouchableOpacity>
-    ),
-    headerRight: (
-      <TouchableOpacity
-        onPress={() =>
-          Share.share({
-            title: "Share this article",
-            url: navigation.state.params.url
-          })
-        }
-      >
-        <Text style={{ paddingRight: 20 }}>
-          <FeatherIcon name="share" size={25} color="white" />
-        </Text>
-      </TouchableOpacity>
-    ),
     headerStyle: {
       borderBottomWidth: 0,
       zIndex: -10

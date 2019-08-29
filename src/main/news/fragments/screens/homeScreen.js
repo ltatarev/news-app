@@ -22,21 +22,11 @@ import styles from "../styles";
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    headerTitle: "NEWS",
-    headerRight: (
-      <TouchableOpacity style={{ paddingBottom: 10, paddingRight: 15 }}>
-        <Text>
-          All
-          <FeatherIcon name="chevron-down" size={18} color="black" />
-        </Text>
-      </TouchableOpacity>
-    )
+    headerTitle: "NEWS"
   };
 
   constructor(props) {
     super(props);
-    this.state = { calledApi: false };
-    this.onRefresh = this.onRefresh.bind(this);
   }
 
   static propTypes = {
@@ -44,11 +34,6 @@ class HomeScreen extends Component {
     isFetching: PropTypes.bool,
     requestNewsDispatch: PropTypes.func
   };
-
-  onRefresh() {
-    const { requestNewsDispatch } = this.props;
-    requestNewsDispatch();
-  }
 
   componentDidMount() {
     const { requestNewsDispatch } = this.props;
@@ -81,8 +66,6 @@ class HomeScreen extends Component {
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
           ListEmptyComponent={<ListEmpty />}
-          onRefresh={this.onRefresh}
-          refreshing={isFetching}
         />
       </View>
     );
