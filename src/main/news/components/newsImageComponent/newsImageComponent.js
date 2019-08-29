@@ -29,16 +29,19 @@ class NewsImage extends Component {
 
     return (
       <View style={styles.container}>
-        <ActivityIndicator
-          style={[styles.activity, styles.image, styles.imageOverlay]}
-          animating={this.state.loading}
-        />
         <Animated.Image
-          style={[styles.image, { opacity: this.thumbnailAnimated }]}
+          style={[
+            styles.image,
+            { opacity: this.thumbnailAnimated, backgroundColor: "#fff" }
+          ]}
           source={{
             uri: thumbnailImage
           }}
           resizeMode="cover"
+        />
+        <ActivityIndicator
+          style={[styles.activity, styles.image, styles.imageOverlay]}
+          animating={this.state.loading}
         />
         <FastImage
           style={[

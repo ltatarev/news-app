@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     top: 0
   },
   container: {
-    backgroundColor: "#e1e4e8",
     borderRadius: 5,
     zIndex: 0,
-    height: size.y * 0.75
+    height: size.y * 0.75,
+    opacity: 0.5
   }
 });
 
