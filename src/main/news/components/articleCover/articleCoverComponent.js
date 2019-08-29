@@ -4,7 +4,6 @@ import { ImageBackground } from "react-native";
 import FastImage from "react-native-fast-image";
 
 import styles from "./articleCoverStyles";
-
 class ArticleCover extends Component {
   constructor(props) {
     super(props);
@@ -16,15 +15,15 @@ class ArticleCover extends Component {
 
     return (
       <ImageBackground
-        style={[styles.container, styles.image]}
-        source={{ uri: thumbnailImage }}
+        style={styles.container}
+        source={{ uri: urlToImage }}
         resizeMode="cover"
         blurRadius={2}
       >
         <FastImage
           style={styles.imageOverlay}
           source={{
-            uri: urlToImage
+            uri: thumbnailImage
           }}
         />
       </ImageBackground>

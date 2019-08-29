@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Share, StatusBar } from "react-native";
+import { Text, TouchableOpacity, Share, StatusBar } from "react-native";
 
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
@@ -14,6 +14,7 @@ import { getNews } from "../../redux/selectors";
 import { ArticleCover, ArticleTitle } from "../../components";
 
 import styles from "../styles";
+import { ScrollView } from "react-native-gesture-handler";
 
 class NewsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -60,6 +61,8 @@ class NewsScreen extends Component {
     return navigation.state.params.id;
   };
 
+  keyExtractor = (item, index) => index.toString();
+
   render() {
     const { news } = this.props;
     const { id } = this.state;
@@ -76,7 +79,7 @@ class NewsScreen extends Component {
     } = currentArticle;
 
     return (
-      <View style={{ flexDirection: "column", flex: 1 }}>
+      <ScrollView style={{ flexDirection: "column", flex: 1 }}>
         <StatusBar barStyle="light-content" />
         <ArticleCover urlToImage={urlToImage} />
         <ArticleTitle
@@ -88,7 +91,7 @@ class NewsScreen extends Component {
         <Text style={styles.articleText}>
           {content ? content : description}
         </Text>
-      </View>
+      </ScrollView>
     );
   }
 }

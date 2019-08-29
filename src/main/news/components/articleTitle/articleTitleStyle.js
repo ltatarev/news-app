@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   description: {
-    flex: 1,
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-around",
@@ -27,7 +26,6 @@ const styles = StyleSheet.create({
     marginRight: 50
   },
   title: {
-    flex: 1,
     flexWrap: "wrap",
     opacity: 1,
     alignSelf: "center",

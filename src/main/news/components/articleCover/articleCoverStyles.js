@@ -1,9 +1,7 @@
 import { StyleSheet } from "react-native";
+import size from "../../fragments/styles/size";
 
 const styles = StyleSheet.create({
-  image: {
-    height: "70%"
-  },
   imageOverlay: {
     position: "absolute",
     left: 0,
@@ -14,7 +12,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#e1e4e8",
     borderRadius: 5,
-    zIndex: 0
+    zIndex: 0,
+    height: size.y * 0.75
   }
 });
 
