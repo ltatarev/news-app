@@ -12,10 +12,12 @@ class ArticleTitle extends Component {
     const { title, publishedAt, author, source } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.title, styles.text]}>{title}</Text>
         <View style={styles.description}>
-          <Text style={styles.author}>{author ? author : source}</Text>
-          <Text style={styles.author}>{publishedAt}</Text>
+          <Text style={[styles.author, styles.text]}>
+            {author ? author : source}
+          </Text>
+          <Text style={[styles.author, styles.text]}>{publishedAt}</Text>
         </View>
       </View>
     );

@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { Text, ImageBackground, TouchableOpacity, View } from "react-native";
-
-import FeatherIcon from "react-native-vector-icons/Feather";
-
+import { Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
-
+import FeatherIcon from "react-native-vector-icons/Feather";
 import PropTypes from "prop-types";
 
 import styles from "../errorComponent/errorComponent";
@@ -30,17 +27,10 @@ class ListEmpty extends Component {
   };
 
   render() {
-    const text = "No news available at this moment. Please try again later.";
+    const text = "No news available at this moment. Please try again.";
     return (
-      <ImageBackground
-        source={{
-          uri: "https://bit.ly/30QYYKM"
-        }}
-        style={[styles.emptyContainer, { flex: 1 }]}
-        blurRadius={6}
-      >
+      <View style={styles.emptyContainer}>
         <Text style={styles.emptyText}>{text}</Text>
-
         <TouchableOpacity onPress={this.handlePress}>
           <FeatherIcon
             name="refresh-cw"
@@ -49,7 +39,7 @@ class ListEmpty extends Component {
             style={{ padding: 30 }}
           />
         </TouchableOpacity>
-      </ImageBackground>
+      </View>
     );
   }
 }

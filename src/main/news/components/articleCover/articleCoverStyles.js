@@ -1,26 +1,20 @@
 import { StyleSheet } from "react-native";
-
-const image = {
-  aspectRatio: 1
-};
-
-const container = {
-  backgroundColor: "#e1e4e8",
-  borderRadius: 5
-};
-
-const imageOverlay = {
-  position: "absolute",
-  left: 0,
-  right: 0,
-  bottom: 0,
-  top: 0
-};
+import size from "../../fragments/styles/size";
 
 const styles = StyleSheet.create({
-  image: { ...image },
-  imageOverlay: { ...imageOverlay },
-  container: { ...container }
+  imageOverlay: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0
+  },
+  container: {
+    borderRadius: 5,
+    zIndex: 0,
+    height: size.y * 0.75,
+    opacity: 0.5
+  }
 });
 
 export default styles;

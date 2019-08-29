@@ -1,17 +1,20 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, Share, StatusBar } from "react-native";
+
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 
+import FeatherIcon from "react-native-vector-icons/Feather";
+
 import PropTypes from "prop-types";
 
-// * Styles
-import styles from "../styles";
+import { getNews } from "../../redux/selectors";
 
 // * child components
-import { LoadingModal, ArticleCover, ArticleTitle } from "../../components";
+import { ArticleCover, ArticleTitle } from "../../components";
 
-import FeatherIcon from "react-native-vector-icons/Feather";
+import styles from "../styles";
+import { ScrollView } from "react-native-gesture-handler";
 
 class NewsScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,24 +26,29 @@ class NewsScreen extends Component {
       </TouchableOpacity>
     ),
     headerRight: (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          Share.share({
+            title: "Share this article",
+            url: navigation.state.params.url
+          })
+        }
+      >
         <Text style={{ paddingRight: 20 }}>
-          <FeatherIcon name="share" size={24} color="white" />
+          <FeatherIcon name="share" size={25} color="white" />
         </Text>
       </TouchableOpacity>
     ),
     headerStyle: {
-      borderBottomWidth: 0
+      borderBottomWidth: 0,
+      zIndex: -10
     },
     headerTransparent: true
   });
 
   constructor(props) {
     super(props);
-    this.state = {
-      news: this.getNavigationParams(),
-      isFetching: true
-    };
+    this.state = { id: this.getNavigationParams() };
   }
 
   static propTypes = {
@@ -50,20 +58,16 @@ class NewsScreen extends Component {
 
   getNavigationParams = () => {
     const { navigation } = this.props;
-    return navigation.state.params.news || {};
+    return navigation.state.params.id;
   };
 
-  componentDidMount() {
-    const { navigation } = this.props;
-    const { news } = this.state;
-    navigation.setParams({
-      title: news.shortTitle
-    });
-    this.setState({ isFetching: false });
-  }
+  keyExtractor = (item, index) => index.toString();
 
   render() {
-    const { news, isFetching } = this.state;
+    const { news } = this.props;
+    const { id } = this.state;
+    const currentArticle = news[id];
+
     const {
       urlToImage,
       title,
@@ -72,25 +76,31 @@ class NewsScreen extends Component {
       source,
       content,
       description
-    } = news;
-
-    if (isFetching) return <LoadingModal isFetching={isFetching} />;
+    } = currentArticle;
 
     return (
-      <View style={{ flexDirection: "column", flex: 1 }}>
+      <ScrollView style={{ flexDirection: "column", flex: 1 }}>
+        <StatusBar barStyle="light-content" />
+        <ArticleCover urlToImage={urlToImage} />
         <ArticleTitle
           title={title}
           publishedAt={publishedAt}
           author={author}
           source={source}
         />
-        <ArticleCover urlToImage={urlToImage} />
         <Text style={styles.articleText}>
           {content ? content : description}
         </Text>
-      </View>
+      </ScrollView>
     );
   }
 }
 
-export default connect()(withNavigation(NewsScreen));
+const mapStateToProps = state => ({
+  news: getNews(state)
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(withNavigation(NewsScreen));

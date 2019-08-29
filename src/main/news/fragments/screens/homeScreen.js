@@ -17,7 +17,7 @@ import {
   LoadingModal
 } from "../../components";
 
-// * Styles
+// * styles
 import styles from "../styles";
 
 class HomeScreen extends Component {
@@ -36,6 +36,7 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = { calledApi: false };
+    this.onRefresh = this.onRefresh.bind(this);
   }
 
   static propTypes = {
@@ -44,11 +45,15 @@ class HomeScreen extends Component {
     requestNewsDispatch: PropTypes.func
   };
 
+  onRefresh() {
+    const { requestNewsDispatch } = this.props;
+    requestNewsDispatch();
+  }
+
   componentDidMount() {
     const { requestNewsDispatch } = this.props;
     // * request news upon mounting
     requestNewsDispatch();
-    this.setState({ calledApi: true });
   }
 
   renderItem = ({ item }) => (
@@ -64,16 +69,10 @@ class HomeScreen extends Component {
 
   render() {
     const { isFetching, news, error } = this.props;
-    const { calledApi } = this.state;
 
     if (isFetching) return <LoadingModal isFetching={isFetching} />;
 
-    if (error && calledApi)
-      return (
-        <ErrorComponent
-          text={"There was a problem receiving news. Please try again later."}
-        />
-      );
+    if (error) return <ErrorComponent />;
 
     return (
       <View style={styles.container}>
@@ -81,11 +80,9 @@ class HomeScreen extends Component {
           data={news}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
-          ListEmptyComponent={
-            <ErrorComponent
-              text={"No news available at this moment. Please try again later."}
-            />
-          }
+          ListEmptyComponent={<ListEmpty />}
+          onRefresh={this.onRefresh}
+          refreshing={isFetching}
         />
       </View>
     );

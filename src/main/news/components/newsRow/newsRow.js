@@ -16,7 +16,7 @@ class NewsRow extends Component {
 
   redirectToNews() {
     const { navigation, news } = this.props;
-    navigation.navigate("News", { news });
+    navigation.navigate("News", { id: news.id, url: news.url });
   }
 
   render() {
