@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    aspectRatio: 1,
     borderRadius: 5
   },
   text: {
