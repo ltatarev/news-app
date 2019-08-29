@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Share } from "react-native";
+import { Text, View, TouchableOpacity, Share, StatusBar } from "react-native";
 
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
@@ -77,6 +77,7 @@ class NewsScreen extends Component {
 
     return (
       <View style={{ flexDirection: "column", flex: 1 }}>
+        <StatusBar barStyle="light-content" />
         <ArticleCover urlToImage={urlToImage} />
         <ArticleTitle
           title={title}
