@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Share } from "react-native";
+
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
+
 import FeatherIcon from "react-native-vector-icons/Feather";
+
 import PropTypes from "prop-types";
+
+import { getNews, getNewsById } from "../../redux/selectors";
 
 // * child components
 import { ArticleCover, ArticleTitle } from "../../components";
@@ -20,23 +25,29 @@ class NewsScreen extends Component {
       </TouchableOpacity>
     ),
     headerRight: (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          Share.share({
+            title: "Share this article",
+            url: navigation.state.params.news.url
+          })
+        }
+      >
         <Text style={{ paddingRight: 20 }}>
-          <FeatherIcon name="share" size={24} color="white" />
+          <FeatherIcon name="share" size={25} color="white" />
         </Text>
       </TouchableOpacity>
     ),
     headerStyle: {
-      borderBottomWidth: 0
+      borderBottomWidth: 0,
+      zIndex: -10
     },
     headerTransparent: true
   });
 
   constructor(props) {
     super(props);
-    this.state = {
-      news: this.getNavigationParams()
-    };
+    this.state = { id: this.getNavigationParams() };
   }
 
   static propTypes = {
@@ -46,19 +57,20 @@ class NewsScreen extends Component {
 
   getNavigationParams = () => {
     const { navigation } = this.props;
-    return navigation.state.params.news || {};
+    return navigation.state.params.id;
   };
 
-  componentDidMount() {
-    const { navigation } = this.props;
-    const { news } = this.state;
-    navigation.setParams({
-      title: news.shortTitle
+  onRefresh() {
+    this.setState({ isFetching: true }, function() {
+      this.getApiData();
     });
   }
 
   render() {
-    const { news } = this.state;
+    const { news } = this.props;
+    const { id } = this.state;
+    const currentArticle = news[id];
+
     const {
       urlToImage,
       title,
@@ -67,17 +79,17 @@ class NewsScreen extends Component {
       source,
       content,
       description
-    } = news;
+    } = currentArticle;
 
     return (
       <View style={{ flexDirection: "column", flex: 1 }}>
+        <ArticleCover urlToImage={urlToImage} />
         <ArticleTitle
           title={title}
           publishedAt={publishedAt}
           author={author}
           source={source}
         />
-        <ArticleCover urlToImage={urlToImage} />
         <Text style={styles.articleText}>
           {content ? content : description}
         </Text>
@@ -86,4 +98,11 @@ class NewsScreen extends Component {
   }
 }
 
-export default connect()(withNavigation(NewsScreen));
+const mapStateToProps = state => ({
+  news: getNews(state)
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(withNavigation(NewsScreen));
