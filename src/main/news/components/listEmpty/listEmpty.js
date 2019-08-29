@@ -27,7 +27,7 @@ class ListEmpty extends Component {
   };
 
   render() {
-    const text = "No news available at this moment. Please try.";
+    const text = "No news available at this moment. Please try again.";
     return (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyText}>{text}</Text>

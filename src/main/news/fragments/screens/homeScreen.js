@@ -36,6 +36,7 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = { calledApi: false };
+    this.onRefresh = this.onRefresh.bind(this);
   }
 
   static propTypes = {
@@ -44,11 +45,15 @@ class HomeScreen extends Component {
     requestNewsDispatch: PropTypes.func
   };
 
+  onRefresh() {
+    const { requestNewsDispatch } = this.props;
+    requestNewsDispatch();
+  }
+
   componentDidMount() {
     const { requestNewsDispatch } = this.props;
     // * request news upon mounting
     requestNewsDispatch();
-    this.setState({ calledApi: true });
   }
 
   renderItem = ({ item }) => (
@@ -64,12 +69,10 @@ class HomeScreen extends Component {
 
   render() {
     const { isFetching, news, error } = this.props;
-    const { calledApi } = this.state;
 
     if (isFetching) return <LoadingModal isFetching={isFetching} />;
 
-    // * error after api call
-    if (error && calledApi) return <ErrorComponent />;
+    if (error) return <ErrorComponent />;
 
     return (
       <View style={styles.container}>
@@ -78,6 +81,8 @@ class HomeScreen extends Component {
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
           ListEmptyComponent={<ListEmpty />}
+          onRefresh={this.onRefresh}
+          refreshing={isFetching}
         />
       </View>
     );
