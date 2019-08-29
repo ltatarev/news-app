@@ -19,6 +19,7 @@ class ArticleCover extends Component {
         style={[styles.container, styles.image]}
         source={{ uri: thumbnailImage }}
         resizeMode="cover"
+        blurRadius={2}
       >
         <FastImage
           style={styles.imageOverlay}

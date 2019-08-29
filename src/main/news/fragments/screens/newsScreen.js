@@ -8,7 +8,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 
 import PropTypes from "prop-types";
 
-import { getNews, getNewsById } from "../../redux/selectors";
+import { getNews } from "../../redux/selectors";
 
 // * child components
 import { ArticleCover, ArticleTitle } from "../../components";
@@ -29,7 +29,7 @@ class NewsScreen extends Component {
         onPress={() =>
           Share.share({
             title: "Share this article",
-            url: navigation.state.params.news.url
+            url: navigation.state.params.url
           })
         }
       >
@@ -59,12 +59,6 @@ class NewsScreen extends Component {
     const { navigation } = this.props;
     return navigation.state.params.id;
   };
-
-  onRefresh() {
-    this.setState({ isFetching: true }, function() {
-      this.getApiData();
-    });
-  }
 
   render() {
     const { news } = this.props;

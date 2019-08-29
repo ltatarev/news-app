@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import size from "../../fragments/styles/size";
 
 const text = {
   color: "white",
@@ -12,8 +13,8 @@ const text = {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 150,
-    zIndex: 10,
+    top: size.y / 4,
+    zIndex: 30,
     width: "100%"
   },
   description: {
