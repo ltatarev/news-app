@@ -8,6 +8,7 @@ const fetchIfNeeded = store => next => action => {
   if (action.type === "INITIAL_REQUEST") {
     if (shouldFetchNews(getState())) {
       fetchNews()(dispatch);
+      next(action);
     }
   } else {
     next(action);

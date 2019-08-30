@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ImageBackground } from "react-native";
+import { ImageBackground, Image } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -28,7 +28,7 @@ class UpNextCover extends Component {
         resizeMode="cover"
         blurRadius={2}
       >
-        <FastImage
+        <Image
           style={styles.image}
           source={{
             uri: urlToImage

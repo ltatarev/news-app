@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { View, FlatList, TouchableOpacity, Text } from "react-native";
+import { View, FlatList, LayoutAnimation } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 
 import PropTypes from "prop-types";
 import { initialRequest } from "../../redux/actions";
 import { getNews, getFetching, getError } from "../../redux/selectors";
-
-import FeatherIcon from "react-native-vector-icons/Feather";
 
 // * child components
 import {
@@ -22,20 +20,13 @@ import styles from "../styles";
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    headerTitle: "NEWS",
-    headerRight: (
-      <TouchableOpacity style={{ paddingBottom: 10, paddingRight: 15 }}>
-        <Text>
-          All
-          <FeatherIcon name="chevron-down" size={18} color="black" />
-        </Text>
-      </TouchableOpacity>
-    )
+    headerTitle: "NEWS"
   };
 
   constructor(props) {
     super(props);
     this.onRefresh = this.onRefresh.bind(this);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
   }
 
   static propTypes = {

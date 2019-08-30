@@ -1,7 +1,7 @@
 export const container = {
   flex: 1,
   flexDirection: "row",
-  width: 100 + "%"
+  width: "100%"
 };
 
 export const articleText = {

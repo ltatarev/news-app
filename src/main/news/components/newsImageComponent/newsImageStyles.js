@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#e1e4e8",
+    backgroundColor: "#fff",
     borderRadius: 5
   },
   imageOverlay: {
@@ -11,9 +11,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     top: 0
-  },
-  activity: {
-    zIndex: 10
   },
   image: {
     width: 75,

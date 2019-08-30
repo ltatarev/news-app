@@ -1,51 +1,19 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity, Share, StatusBar } from "react-native";
+import { Text, StatusBar, ScrollView, LayoutAnimation } from "react-native";
 
 import { connect } from "react-redux";
-import { withNavigation, NavigationContext } from "react-navigation";
-
-import FeatherIcon from "react-native-vector-icons/Feather";
+import { withNavigation } from "react-navigation";
 
 import PropTypes from "prop-types";
 
-import { getNews } from "../../redux/selectors";
+import { getNews, getLastId } from "../../redux/selectors";
 
 // * child components
 import { ArticleCover, ArticleTitle, UpNextComponent } from "../../components";
 
 import styles from "../styles";
-import { ScrollView } from "react-native-gesture-handler";
 
 class NewsScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: (
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-        <Text style={{ paddingLeft: 20 }}>
-          <FeatherIcon name="arrow-left" size={27} color="white" />
-        </Text>
-      </TouchableOpacity>
-    ),
-    headerRight: (
-      <TouchableOpacity
-        onPress={() =>
-          Share.share({
-            title: "Share this article",
-            url: navigation.state.params.url
-          })
-        }
-      >
-        <Text style={{ paddingRight: 20 }}>
-          <FeatherIcon name="share" size={25} color="white" />
-        </Text>
-      </TouchableOpacity>
-    ),
-    headerStyle: {
-      borderBottomWidth: 0,
-      zIndex: -10
-    },
-    headerTransparent: true
-  });
-
   constructor(props) {
     super(props);
     this.state = {
@@ -53,11 +21,13 @@ class NewsScreen extends Component {
       nextId: this.nextId(this.getNavigationParams())
     };
     this.upNext = this.upNext.bind(this);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
   }
 
   static propTypes = {
     navigation: PropTypes.object,
-    articleId: PropTypes.number
+    articleId: PropTypes.number,
+    lastId: PropTypes.number
   };
 
   getNavigationParams = () => {
@@ -68,13 +38,15 @@ class NewsScreen extends Component {
   keyExtractor = (item, index) => index.toString();
 
   nextId(id) {
-    const { news } = this.props;
+    const { lastId } = this.props;
     // * In case the clicked article was last, return to first
-    return id + 1 < news.length ? id + 1 : 0;
+    return id + 1 < lastId ? id + 1 : 0;
   }
 
   upNext(id) {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({ id: id, nextId: this.nextId(id) });
+    this.refs._scrollView.scrollTo({ y: 65, animated: true, duration: 400 });
   }
 
   render() {
@@ -94,7 +66,10 @@ class NewsScreen extends Component {
     } = currentArticle;
 
     return (
-      <ScrollView style={{ flexDirection: "column", flex: 1 }}>
+      <ScrollView
+        style={{ flexDirection: "column", flex: 1 }}
+        ref="_scrollView"
+      >
         <StatusBar barStyle="light-content" />
         <ArticleCover urlToImage={urlToImage} />
         <ArticleTitle
@@ -113,7 +88,8 @@ class NewsScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  news: getNews(state)
+  news: getNews(state),
+  lastId: getLastId(state)
 });
 
 export default connect(

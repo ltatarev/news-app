@@ -30,9 +30,9 @@ class UpNextComponent extends Component {
 
     return (
       <View style={styles.container}>
-        <UpNextCover urlToImage={urlToImage} />
-        <Text style={[styles.text, styles.upNext]}>UP NEXT</Text>
         <TouchableOpacity onPress={this.handlePress}>
+          <UpNextCover urlToImage={urlToImage} />
+          <Text style={[styles.text, styles.upNext]}>UP NEXT</Text>
           <Text style={styles.text}>{shortTitle}</Text>
         </TouchableOpacity>
       </View>

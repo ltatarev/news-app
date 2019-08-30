@@ -1,18 +1,32 @@
 import React, { Component } from "react";
-import { View, Animated, ActivityIndicator } from "react-native";
+import { View, Animated, ActivityIndicator, Image, Easing } from "react-native";
 import FastImage from "react-native-fast-image";
 
 import styles from "./newsImageStyles";
+
+import thumbnail from "../../../../assets/thumbnail.jpeg";
 
 class NewsImage extends Component {
   constructor(props) {
     super(props);
     this.state = { loading: true };
+    this.imageAnimated = new Animated.Value(0);
   }
 
-  handleThumbnailLoad = thumbnailAnimated => {
-    Animated.timing(thumbnailAnimated, {
-      toValue: 1
+  handleImageLoad = () => {
+    Animated.timing(this.imageAnimated, {
+      toValue: 1,
+      easing: Easing.cubic,
+      duration: 800
+    }).start();
+    this.loadEnd();
+  };
+
+  handleThumbnailLoad = () => {
+    Animated.timing(this.imageAnimated, {
+      toValue: 1,
+      easing: Easing.quad,
+      duration: 200
     }).start();
     this.loadEnd();
   };
@@ -23,31 +37,30 @@ class NewsImage extends Component {
 
   render() {
     const { urlToImage } = this.props;
-    const thumbnailImage =
-      "https://images.unsplash.com/photo-1508612761958-e931d843bdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=658&q=80";
-    let thumbnailAnimated = new Animated.Value(0);
 
     return (
       <View style={styles.container}>
-        <Animated.Image
-          style={[styles.image, { opacity: this.thumbnailAnimated }]}
-          source={{
-            uri: thumbnailImage
-          }}
-          resizeMode="cover"
-        />
         <ActivityIndicator
           style={[styles.activity, styles.image, styles.imageOverlay]}
           animating={this.state.loading}
         />
-        <FastImage
-          style={[styles.imageOverlay, styles.image]}
+        <Animated.Image
+          style={[styles.image, { opacity: this.imageAnimated }]}
+          source={thumbnail}
+          resizeMode="cover"
+        />
+        <Animated.Image
+          style={[
+            styles.imageOverlay,
+            styles.image,
+            { opacity: this.imageAnimated }
+          ]}
           source={{
             uri: urlToImage
           }}
           resizeMode="cover"
-          onLoad={this.loadEnd}
-          onError={e => this.handleThumbnailLoad(thumbnailAnimated)}
+          onLoad={this.handleImageLoad}
+          onError={this.handleThumbnailLoad}
         />
       </View>
     );

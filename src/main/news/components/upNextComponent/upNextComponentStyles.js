@@ -10,8 +10,9 @@ const styles = StyleSheet.create({
   },
   image: {
     position: "absolute",
-    opacity: 0.8,
-    height: "100%",
+    opacity: 0.9,
+    resizeMode: "cover",
+    height: size.y / 5,
     width: "100%"
   },
   text: {
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 2
   },
   upNext: {
-    marginTop: 30
+    paddingTop: 20
   }
 });
 
