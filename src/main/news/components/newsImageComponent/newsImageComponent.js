@@ -30,10 +30,7 @@ class NewsImage extends Component {
     return (
       <View style={styles.container}>
         <Animated.Image
-          style={[
-            styles.image,
-            { opacity: this.thumbnailAnimated, backgroundColor: "#fff" }
-          ]}
+          style={[styles.image, { opacity: this.thumbnailAnimated }]}
           source={{
             uri: thumbnailImage
           }}
@@ -44,16 +41,12 @@ class NewsImage extends Component {
           animating={this.state.loading}
         />
         <FastImage
-          style={[
-            styles.imageOverlay,
-            { opacity: this.imageAnimated },
-            styles.image
-          ]}
+          style={[styles.imageOverlay, styles.image]}
           source={{
             uri: urlToImage
           }}
           resizeMode="cover"
-          onLoadEnd={this.loadEnd}
+          onLoad={this.loadEnd}
           onError={e => this.handleThumbnailLoad(thumbnailAnimated)}
         />
       </View>

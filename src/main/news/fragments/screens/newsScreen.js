@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Text, TouchableOpacity, Share, StatusBar } from "react-native";
 
 import { connect } from "react-redux";
-import { withNavigation } from "react-navigation";
+import { withNavigation, NavigationContext } from "react-navigation";
 
 import FeatherIcon from "react-native-vector-icons/Feather";
 
@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import { getNews } from "../../redux/selectors";
 
 // * child components
-import { ArticleCover, ArticleTitle } from "../../components";
+import { ArticleCover, ArticleTitle, UpNextComponent } from "../../components";
 
 import styles from "../styles";
 import { ScrollView } from "react-native-gesture-handler";
@@ -48,7 +48,11 @@ class NewsScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { id: this.getNavigationParams() };
+    this.state = {
+      id: this.getNavigationParams(),
+      nextId: this.nextId(this.getNavigationParams())
+    };
+    this.upNext = this.upNext.bind(this);
   }
 
   static propTypes = {
@@ -63,10 +67,21 @@ class NewsScreen extends Component {
 
   keyExtractor = (item, index) => index.toString();
 
+  nextId(id) {
+    const { news } = this.props;
+    // * In case the clicked article was last, return to first
+    return id + 1 < news.length ? id + 1 : 0;
+  }
+
+  upNext(id) {
+    this.setState({ id: id, nextId: this.nextId(id) });
+  }
+
   render() {
     const { news } = this.props;
-    const { id } = this.state;
+    const { id, nextId } = this.state;
     const currentArticle = news[id];
+    const nextArticle = news[nextId];
 
     const {
       urlToImage,
@@ -91,6 +106,7 @@ class NewsScreen extends Component {
         <Text style={styles.articleText}>
           {content ? content : description}
         </Text>
+        <UpNextComponent article={nextArticle} upNext={this.upNext} />
       </ScrollView>
     );
   }
