@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Text, StatusBar, ScrollView, LayoutAnimation } from "react-native";
+import {
+  Text,
+  StatusBar,
+  ScrollView,
+  LayoutAnimation,
+  StyleSheet
+} from "react-native";
 
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
@@ -8,10 +14,7 @@ import PropTypes from "prop-types";
 
 import { getNews, getLastId } from "../../redux/selectors";
 
-// * child components
 import { ArticleCover, ArticleTitle, UpNextComponent } from "../../components";
-
-import styles from "../styles";
 
 class NewsScreen extends Component {
   constructor(props) {
@@ -21,7 +24,6 @@ class NewsScreen extends Component {
       nextId: this.nextId(this.getNavigationParams())
     };
     this.upNext = this.upNext.bind(this);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
   }
 
   static propTypes = {
@@ -40,13 +42,17 @@ class NewsScreen extends Component {
   nextId(id) {
     const { lastId } = this.props;
     // * In case the clicked article was last, return to first
-    return id + 1 < lastId ? id + 1 : 0;
+    return id + 1 <= lastId ? id + 1 : 0;
   }
 
   upNext(id) {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    LayoutAnimation.easeInEaseOut();
     this.setState({ id: id, nextId: this.nextId(id) });
-    this.refs._scrollView.scrollTo({ y: 65, animated: true, duration: 400 });
+    this.scrollRef.scrollTo({ y: 65, animated: true, duration: 300 });
+  }
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
   }
 
   render() {
@@ -66,10 +72,7 @@ class NewsScreen extends Component {
     } = currentArticle;
 
     return (
-      <ScrollView
-        style={{ flexDirection: "column", flex: 1 }}
-        ref="_scrollView"
-      >
+      <ScrollView style={styles.scrollView} ref={ref => (this.scrollRef = ref)}>
         <StatusBar barStyle="light-content" />
         <ArticleCover urlToImage={urlToImage} />
         <ArticleTitle
@@ -86,6 +89,16 @@ class NewsScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  articleText: {
+    fontSize: 17,
+    padding: 25,
+    color: "#6c6c6c",
+    fontFamily: "Avenir"
+  },
+  scrollView: { flexDirection: "column", flex: 1 }
+});
 
 const mapStateToProps = state => ({
   news: getNews(state),

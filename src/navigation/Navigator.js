@@ -15,18 +15,14 @@ const AppNavigator = createStackNavigator(
         headerLeft: <BackButton navigation={navigation} />,
         headerRight: <ShareButton navigation={navigation} />,
         headerStyle: {
-          borderBottomWidth: 0,
-          zIndex: -10
+          borderBottomWidth: 0
         },
         headerTransparent: true
       })
     }
   },
   {
-    initialRouteName: "Home",
-    navigationOptions: {
-      gesturesEnabled: false
-    }
+    initialRouteName: "Home"
   }
 );
 

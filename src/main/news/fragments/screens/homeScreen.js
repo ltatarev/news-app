@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, FlatList, LayoutAnimation } from "react-native";
+import { View, FlatList, LayoutAnimation, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 
@@ -15,9 +15,6 @@ import {
   LoadingModal
 } from "../../components";
 
-// * styles
-import styles from "../styles";
-
 class HomeScreen extends Component {
   static navigationOptions = {
     headerTitle: "NEWS"
@@ -26,7 +23,7 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.onRefresh = this.onRefresh.bind(this);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }
 
   static propTypes = {
@@ -78,6 +75,14 @@ class HomeScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%"
+  }
+});
 
 const mapStateToProps = state => ({
   news: getNews(state),

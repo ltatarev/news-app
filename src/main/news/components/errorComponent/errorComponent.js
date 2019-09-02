@@ -1,11 +1,16 @@
 import React, { Component } from "react";
-import { Text, ImageBackground, TouchableOpacity, View } from "react-native";
+import {
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  View,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 
 import PropTypes from "prop-types";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import styles from "./errorComponentStyles";
 
 import { initialRequest } from "../../redux/actions";
 
@@ -57,6 +62,24 @@ class ErrorComponent extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  emptyContainer: {
+    flex: 1,
+    flexGrow: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "stretch"
+  },
+  emptyText: {
+    fontSize: 15,
+    color: "black",
+    textAlign: "center",
+    padding: 20,
+    backgroundColor: "white",
+    fontFamily: "Avenir"
+  }
+});
 
 const mapDispatchToProps = {
   requestNewsDispatch: initialRequest

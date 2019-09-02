@@ -1,11 +1,17 @@
 import React, { Component } from "react";
-import { Text, ImageBackground, TouchableOpacity, View } from "react-native";
+import {
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  View,
+  StyleSheet
+} from "react-native";
 
 import PropTypes from "prop-types";
 
-import UpNextCover from "../upNextCover/upNextCover";
+import NewsImage from "../newsImageComponent/newsImageComponent";
 
-import styles from "./upNextComponentStyles";
+import size from "../../fragments/styles/size";
 
 class UpNextComponent extends Component {
   constructor(props) {
@@ -14,6 +20,7 @@ class UpNextComponent extends Component {
   }
 
   handlePress() {
+    // * Go to next article
     const { upNext, article } = this.props;
     const { id } = article;
     upNext(id);
@@ -31,7 +38,7 @@ class UpNextComponent extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.handlePress}>
-          <UpNextCover urlToImage={urlToImage} />
+          <NewsImage urlToImage={urlToImage} styleProp={"upnext"} />
           <Text style={[styles.text, styles.upNext]}>UP NEXT</Text>
           <Text style={styles.text}>{shortTitle}</Text>
         </TouchableOpacity>
@@ -39,5 +46,34 @@ class UpNextComponent extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#000",
+    height: size.y / 5,
+    marginTop: 25
+  },
+  image: {
+    position: "relative",
+    opacity: 0.9,
+    resizeMode: "cover",
+    width: "100%",
+    height: "100%"
+  },
+  text: {
+    color: "#fff",
+    fontSize: 16,
+    margin: 15,
+    marginLeft: 20,
+    zIndex: 1000,
+    fontWeight: "bold",
+    textShadowColor: "rgba(20, 20, 20, 0.7)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2
+  },
+  upNext: {
+    paddingTop: 15
+  }
+});
 
 export default UpNextComponent;

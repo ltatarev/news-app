@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Text, Image, View, TouchableOpacity } from "react-native";
+import { Text, Image, View, TouchableOpacity, StyleSheet } from "react-native";
 
 import { withNavigation } from "react-navigation";
 import { connect } from "react-redux";
 
-import styles from "./newsRowStyles";
+import size from "../../fragments/styles/size";
 
 import NewsImage from "../newsImageComponent/newsImageComponent";
 
@@ -22,10 +22,15 @@ class NewsRow extends Component {
   render() {
     // * Props from parent component
     const { title, publishedAt, urlToImage } = this.props;
+
     return (
       <View>
         <View style={styles.container}>
-          <NewsImage urlToImage={urlToImage} />
+          <NewsImage
+            urlToImage={urlToImage}
+            style={styles.image}
+            styleProp={"newscover"}
+          />
           {/*           <Image
             style={styles.image}
             resizeMode="cover"
@@ -48,7 +53,44 @@ class NewsRow extends Component {
   }
 }
 
-export default connect(
-  null,
-  null
-)(withNavigation(NewsRow));
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    borderBottomColor: "#efefef",
+    borderBottomWidth: 1,
+    // ios: /8, android /7
+    height: size.y / 8,
+    margin: 5,
+    padding: 7
+  },
+  image: {
+    flex: 2,
+    borderRadius: 5
+  },
+  text: {
+    flex: 3,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingTop: -3,
+    marginLeft: 7,
+    alignItems: "stretch",
+    alignSelf: "flex-start"
+  },
+  title: {
+    fontSize: 25,
+    width: "100%",
+    padding: 5,
+    color: "#6c6c6c",
+    fontFamily: "AvenirNextCondensed-Medium"
+  },
+  date: {
+    fontSize: 12,
+    width: "100%",
+    padding: 5,
+    color: "#9d9d9d"
+  }
+});
+
+export default connect()(withNavigation(NewsRow));

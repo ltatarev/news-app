@@ -5,7 +5,6 @@ import ErrorComponent from "./errorComponent/errorComponent";
 import ArticleCover from "./articleCover/articleCoverComponent";
 import ArticleTitle from "./articleTitle/articleTitle";
 import UpNextComponent from "./upNextComponent/upNextComponent";
-import UpNextCover from "./upNextCover/upNextCover";
 
 export {
   NewsRow,
@@ -14,8 +13,7 @@ export {
   ErrorComponent,
   ArticleTitle,
   ArticleCover,
-  UpNextComponent,
-  UpNextCover
+  UpNextComponent
 };
 
 const components = {
@@ -25,8 +23,7 @@ const components = {
   ErrorComponent,
   ArticleCover,
   ArticleTitle,
-  UpNextComponent,
-  UpNextCover
+  UpNextComponent
 };
 
 export default components;
