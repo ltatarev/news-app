@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, Image, View, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Text,
+  Image,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Platform
+} from "react-native";
 
 import { withNavigation } from "react-navigation";
 import { connect } from "react-redux";
@@ -60,8 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderBottomColor: "#efefef",
     borderBottomWidth: 1,
-    // ios: /8, android /7
-    height: size.y / 8,
+    height: Platform.OS === "ios" ? size.y / 8 : size.y / 7,
     margin: 5,
     padding: 7
   },
