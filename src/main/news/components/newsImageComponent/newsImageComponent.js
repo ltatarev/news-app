@@ -67,7 +67,11 @@ class NewsImage extends Component {
       case "activity":
         return [styles.activity, this.chooseStyleFromProp()];
       case "thumbnail":
-        return [this.chooseStyleFromProp(), { opacity: this.thumbAnimated }];
+        return [
+          this.chooseStyleFromProp(),
+          styles.imageOverlay,
+          { opacity: this.thumbAnimated }
+        ];
       case "image":
         return [
           styles.imageOverlay,

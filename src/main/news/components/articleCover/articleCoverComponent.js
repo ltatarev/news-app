@@ -20,20 +20,21 @@ class ArticleCover extends Component {
 
   // * In case image loaded successfully, hide thumbnail and show image
   showImage = () => {
-    Animated.timing(this.thumbAnimated, {
-      toValue: 0
-    }).start();
     Animated.timing(this.imageAnimated, {
-      toValue: 0.6,
+      toValue: 0.5,
       duration: 100
+    }).start();
+    Animated.timing(this.thumbAnimated, {
+      toValue: 0,
+      duration: 10
     }).start();
   };
 
   // * In case image didn't load successfully, show thumbnail
   showThumbnail = () => {
     Animated.timing(this.thumbAnimated, {
-      toValue: 0.6,
-      duration: 5
+      toValue: 0.5,
+      duration: 100
     }).start();
   };
 
@@ -43,21 +44,21 @@ class ArticleCover extends Component {
     const thumbnailImage =
       "https://images.unsplash.com/photo-1508612761958-e931d843bdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=658&q=80";
 
-    // in url: null case
-    let url = urlToImage ? urlToImage : thumbnailImage;
-
     return (
       <View style={styles.container}>
         <Animated.Image
-          style={[styles.image, { opacity: this.thumbAnimated }]}
+          style={[
+            styles.image,
+            styles.imageOverlay,
+            { opacity: this.thumbAnimated }
+          ]}
           source={{ uri: thumbnailImage }}
           blurRadius={2}
-          onLoad={this.hideImage}
         />
         <Animated.Image
           style={[styles.imageOverlay, { opacity: this.imageAnimated }]}
           source={{
-            uri: url
+            uri: urlToImage
           }}
           blurRadius={1}
           onLoad={this.showImage}
@@ -75,7 +76,6 @@ const styles = StyleSheet.create({
     width: size.x
   },
   image: {
-    opacity: 0.4,
     resizeMode: "cover",
     width: "100%"
   },
@@ -84,9 +84,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    top: 0,
-    opacity: 0.7,
-    zIndex: 100
+    top: 0
   }
 });
 
