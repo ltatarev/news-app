@@ -38,7 +38,7 @@ class UpNextComponent extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.handlePress}>
-          <NewsImage urlToImage={urlToImage} styleProp={"upnext"} />
+          <NewsImage urlToImage={urlToImage} upnext />
           <Text style={[styles.text, styles.upNext]}>UP NEXT</Text>
           <Text style={styles.text}>{shortTitle}</Text>
         </TouchableOpacity>
@@ -52,13 +52,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     height: size.y / 5,
     marginTop: 25
-  },
-  image: {
-    position: "relative",
-    opacity: 0.9,
-    resizeMode: "cover",
-    width: "100%",
-    height: "100%"
   },
   text: {
     color: "#fff",

@@ -33,18 +33,7 @@ class NewsRow extends Component {
     return (
       <View>
         <View style={styles.container}>
-          <NewsImage
-            urlToImage={urlToImage}
-            style={styles.image}
-            styleProp={"newscover"}
-          />
-          {/*           <Image
-            style={styles.image}
-            resizeMode="cover"
-            source={{
-              uri: urlToImage
-            }}
-          /> */}
+          <NewsImage urlToImage={urlToImage} newscover />
           <View style={styles.text}>
             <TouchableOpacity
               style={styles.title}
@@ -64,36 +53,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
+    // flex-start so the content is "anchored" left
+    justifyContent: "flex-start",
+    // horizontal center
+    alignItems: "center",
     borderBottomColor: "#efefef",
     borderBottomWidth: 1,
     height: Platform.OS === "ios" ? size.y / 8 : size.y / 7,
-    margin: 5,
     padding: 7
   },
-  image: {
-    flex: 2,
-    borderRadius: 5
-  },
   text: {
-    flex: 3,
-    flexDirection: "row",
     flexWrap: "wrap",
-    paddingTop: -3,
     marginLeft: 7,
-    alignItems: "stretch",
-    alignSelf: "flex-start"
+    // to ensure text doesn't go out of screen
+    // size.y / 7 = image width
+    maxWidth: size.x - size.y / 7
   },
   title: {
     fontSize: 25,
-    width: "100%",
     padding: 5,
     color: "#6c6c6c",
     fontFamily: "AvenirNextCondensed-Medium"
   },
   date: {
     fontSize: 12,
-    width: "100%",
     padding: 5,
     color: "#9d9d9d"
   }

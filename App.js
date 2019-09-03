@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { UIManager } from "react-native";
+import { UIManager, Platform } from "react-native";
 
 import { persistor, store } from "./src/configureStore";
 import { Provider } from "react-redux";
@@ -7,7 +7,8 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 
 import Navigator from "./src/navigation/Navigator";
 
-UIManager.setLayoutAnimationEnabledExperimental &&
+Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental &&
   UIManager.setLayoutAnimationEnabledExperimental(true);
 
 class App extends PureComponent {

@@ -36,6 +36,10 @@ class ArticleCover extends Component {
       toValue: 0.5,
       duration: 100
     }).start();
+    Animated.timing(this.imageAnimated, {
+      toValue: 0,
+      duration: 10
+    }).start();
   };
 
   render() {
