@@ -4,7 +4,8 @@ import {
   Animated,
   ActivityIndicator,
   Image,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from "react-native";
 import FastImage from "react-native-fast-image";
 
@@ -132,8 +133,8 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   newsCoverImage: {
-    width: size.y / 9,
-    height: size.y / 9,
+    width: Platform.OS === "ios" ? size.y / 10 : size.y / 9,
+    height: Platform.OS === "ios" ? size.y / 10 : size.y / 9,
     borderRadius: 5
   }
 });

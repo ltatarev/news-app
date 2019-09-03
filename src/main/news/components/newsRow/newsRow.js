@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   Text,
-  Image,
   View,
   TouchableOpacity,
   StyleSheet,
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#efefef",
     borderBottomWidth: 1,
     height: Platform.OS === "ios" ? size.y / 8 : size.y / 7,
-    padding: 7
+    padding: 10
   },
   text: {
     flexWrap: "wrap",
