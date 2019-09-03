@@ -9,6 +9,7 @@ function parseArticle(article) {
   let title = _.get(article, "title", "");
   let publishedAt = _.get(article, "publishedAt", "");
   let content = _.get(article, "content", "");
+  let urlToImage = _.get(article, "urlToImage", "");
 
   return {
     ...article,
@@ -17,7 +18,8 @@ function parseArticle(article) {
     publishedAt: parseDate(publishedAt),
     source: name,
     content: parseContent(content),
-    id: id++
+    id: id++,
+    urlToImage: parseImageUrl(urlToImage)
   };
 }
 
@@ -53,6 +55,12 @@ function parseContent(content) {
     return parsedContent;
   }
   return;
+}
+
+function parseImageUrl(url) {
+  return url
+    ? url
+    : "https://images.unsplash.com/photo-1508612761958-e931d843bdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=658&q=80";
 }
 
 export default parseArticle;
