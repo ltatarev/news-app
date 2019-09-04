@@ -52,42 +52,8 @@ class NewsImage extends Component {
     this.setState({ loading: false });
   };
 
-  // * Choose style based on prop
-  chooseStyleFromProp = () => {
-    const { newscover, upnext } = this.props;
-    if (upnext) {
-      return styles.upNext;
-    }
-    if (newscover) {
-      return styles.newsCoverImage;
-    }
-    return;
-  };
-
-  // * Return style for each element
-  chooseStyle(element) {
-    switch (element) {
-      case "activity":
-        return [styles.activity, this.chooseStyleFromProp()];
-      case "thumbnail":
-        return [
-          this.chooseStyleFromProp(),
-          styles.imageOverlay,
-          { opacity: this.thumbAnimated }
-        ];
-      case "image":
-        return [
-          this.chooseStyleFromProp(),
-          styles.imageOverlay,
-          { opacity: this.imageAnimated }
-        ];
-      default:
-        return;
-    }
-  }
-
   render() {
-    const { urlToImage } = this.props;
+    const { urlToImage, newscover, upnext } = this.props;
 
     const thumbUrl =
       "https://images.unsplash.com/photo-1476242906366-d8eb64c2f661?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80";
@@ -95,16 +61,30 @@ class NewsImage extends Component {
     return (
       <View>
         <ActivityIndicator
-          style={this.chooseStyle("activity")}
+          style={[
+            styles.activity,
+            newscover && styles.newsCoverImage,
+            upnext && styles.upNext
+          ]}
           animating={this.state.loading}
         />
         <Animated.Image
-          style={this.chooseStyle("thumbnail")}
+          style={[
+            styles.imageOverlay,
+            { opacity: this.thumbAnimated },
+            newscover && styles.newsCoverImage,
+            upnext && styles.upNext
+          ]}
           source={{ uri: thumbUrl }}
           resizeMode="cover"
         />
         <Animated.Image
-          style={this.chooseStyle("image")}
+          style={[
+            styles.imageOverlay,
+            { opacity: this.imageAnimated },
+            newscover && styles.newsCoverImage,
+            upnext && styles.upNext
+          ]}
           source={{
             uri: urlToImage
           }}

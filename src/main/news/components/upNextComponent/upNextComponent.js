@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  View,
-  StyleSheet
-} from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
 import PropTypes from "prop-types";
 
