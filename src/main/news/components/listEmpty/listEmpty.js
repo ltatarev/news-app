@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import PropTypes from "prop-types";
-
-import styles from "../errorComponent/errorComponent";
 
 import { initialRequest } from "../../redux/actions";
 
@@ -43,6 +41,21 @@ class ListEmpty extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  emptyContainer: {
+    flex: 1,
+    flexGrow: 1
+  },
+  emptyText: {
+    fontSize: 15,
+    color: "black",
+    textAlign: "center",
+    padding: 20,
+    backgroundColor: "white",
+    fontFamily: "Avenir"
+  }
+});
 
 const mapDispatchToProps = {
   requestNewsDispatch: initialRequest

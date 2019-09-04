@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { View, FlatList, TouchableOpacity, Text } from "react-native";
+import { View, FlatList, LayoutAnimation, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 
 import PropTypes from "prop-types";
 import { initialRequest } from "../../redux/actions";
 import { getNews, getFetching, getError } from "../../redux/selectors";
-
-import FeatherIcon from "react-native-vector-icons/Feather";
 
 // * child components
 import {
@@ -17,9 +15,6 @@ import {
   LoadingModal
 } from "../../components";
 
-// * styles
-import styles from "../styles";
-
 class HomeScreen extends Component {
   static navigationOptions = {
     headerTitle: "NEWS"
@@ -27,6 +22,8 @@ class HomeScreen extends Component {
 
   constructor(props) {
     super(props);
+    this.onRefresh = this.onRefresh.bind(this);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }
 
   static propTypes = {
@@ -34,6 +31,11 @@ class HomeScreen extends Component {
     isFetching: PropTypes.bool,
     requestNewsDispatch: PropTypes.func
   };
+
+  onRefresh() {
+    const { requestNewsDispatch } = this.props;
+    requestNewsDispatch();
+  }
 
   componentDidMount() {
     const { requestNewsDispatch } = this.props;
@@ -66,11 +68,21 @@ class HomeScreen extends Component {
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
           ListEmptyComponent={<ListEmpty />}
+          onRefresh={this.onRefresh}
+          refreshing={isFetching}
         />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%"
+  }
+});
 
 const mapStateToProps = state => ({
   news: getNews(state),

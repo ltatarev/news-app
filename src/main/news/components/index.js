@@ -4,6 +4,7 @@ import LoadingModal from "./loadingModal/loadingModal";
 import ErrorComponent from "./errorComponent/errorComponent";
 import ArticleCover from "./articleCover/articleCoverComponent";
 import ArticleTitle from "./articleTitle/articleTitle";
+import UpNextComponent from "./upNextComponent/upNextComponent";
 
 export {
   NewsRow,
@@ -11,7 +12,8 @@ export {
   LoadingModal,
   ErrorComponent,
   ArticleTitle,
-  ArticleCover
+  ArticleCover,
+  UpNextComponent
 };
 
 const components = {
@@ -20,7 +22,8 @@ const components = {
   LoadingModal,
   ErrorComponent,
   ArticleCover,
-  ArticleTitle
+  ArticleTitle,
+  UpNextComponent
 };
 
 export default components;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 
-import styles from "./articleTitleStyle";
+import size from "../../fragments/styles/size";
 
 class ArticleTitle extends Component {
   constructor(props) {
@@ -23,5 +23,44 @@ class ArticleTitle extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    top: size.y / 4,
+    zIndex: 30,
+    width: "100%"
+  },
+  description: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 10,
+    marginLeft: 50,
+    marginRight: 50
+  },
+  title: {
+    flexWrap: "wrap",
+    opacity: 1,
+    alignSelf: "center",
+    padding: 10,
+    paddingLeft: 13,
+    paddingTop: 50,
+    textAlign: "center",
+    fontSize: 20,
+    textTransform: "uppercase"
+  },
+  author: {
+    fontSize: 15
+  },
+  text: {
+    color: "white",
+    fontWeight: "bold",
+    textShadowColor: "rgba(20, 20, 20, 0.7)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    fontFamily: "Avenir"
+  }
+});
 
 export default ArticleTitle;
