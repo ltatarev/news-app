@@ -15,9 +15,9 @@ class UpNextComponent extends Component {
 
   handlePress() {
     // * Go to next article
-    const { upNext, article } = this.props;
+    const { upNextHandle, article } = this.props;
     const { id } = article;
-    upNext(id);
+    upNextHandle();
   }
 
   static propTypes = {
