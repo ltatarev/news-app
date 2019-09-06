@@ -1,9 +1,14 @@
 import React from "react";
 import { Modal, View, ActivityIndicator, StyleSheet } from "react-native";
 
-const LoadingModal = props => {
-  const { isFetching } = props;
+import PropTypes from "prop-types";
 
+LoadingModal.propTypes = {
+  isFetching: PropTypes.bool
+};
+
+function LoadingModal(props) {
+  const { isFetching } = props;
   return (
     <Modal transparent animationType={"none"} visible={isFetching}>
       <View style={styles.modalBackground}>
@@ -13,7 +18,7 @@ const LoadingModal = props => {
       </View>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   modalBackground: {

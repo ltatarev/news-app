@@ -14,53 +14,45 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 
 import { initialRequest } from "../../redux/actions";
 
-class ErrorComponent extends Component {
-  static navigationOptions = {
-    header: null
-  };
+ErrorComponent.propTypes = {
+  navigation: PropTypes.object,
+  requestNewsDispatch: PropTypes.func
+};
 
-  constructor(props) {
-    super(props);
-    this.handlePress = this.handlePress.bind(this);
-  }
+function handlePress(navigation, requestNewsDispatch) {
+  requestNewsDispatch();
+  navigation.navigate("Home");
+}
 
-  static propTypes = {
-    navigation: PropTypes.object,
-    requestNewsDispatch: PropTypes.func
-  };
+function ErrorComponent(props) {
+  const text = "There was a problem receiving news. Please try again.";
 
-  handlePress() {
-    const { navigation, requestNewsDispatch } = this.props;
-    requestNewsDispatch();
-    navigation.navigate("Home");
-  }
+  const { navigation, requestNewsDispatch } = props;
 
-  render() {
-    const text = "There was a problem receiving news. Please try again.";
+  return (
+    <View style={styles.emptyContainer}>
+      <ImageBackground
+        source={{
+          uri: "https://bit.ly/30QYYKM"
+        }}
+        style={styles.emptyContainer}
+        blurRadius={6}
+      >
+        <Text style={styles.emptyText}>{text}</Text>
 
-    return (
-      <View style={styles.emptyContainer}>
-        <ImageBackground
-          source={{
-            uri: "https://bit.ly/30QYYKM"
-          }}
-          style={styles.emptyContainer}
-          blurRadius={6}
+        <TouchableOpacity
+          onPress={handlePress(navigation, requestNewsDispatch)}
         >
-          <Text style={styles.emptyText}>{text}</Text>
-
-          <TouchableOpacity onPress={this.handlePress}>
-            <FeatherIcon
-              name="refresh-cw"
-              size={40}
-              color="black"
-              style={{ padding: 30 }}
-            />
-          </TouchableOpacity>
-        </ImageBackground>
-      </View>
-    );
-  }
+          <FeatherIcon
+            name="refresh-cw"
+            size={40}
+            color="black"
+            style={{ padding: 30 }}
+          />
+        </TouchableOpacity>
+      </ImageBackground>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

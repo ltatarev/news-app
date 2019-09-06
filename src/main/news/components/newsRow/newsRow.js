@@ -14,38 +14,39 @@ import size from "../../fragments/styles/size";
 
 import NewsImage from "../newsImageComponent/newsImageComponent";
 
-class NewsRow extends Component {
-  constructor(props) {
-    super(props);
-    this.redirectToNews = this.redirectToNews.bind(this);
-  }
+import PropTypes from "prop-types";
 
-  redirectToNews() {
-    const { navigation, news } = this.props;
-    navigation.navigate("News", { id: news.id, url: news.url });
-  }
+NewsRow.propTypes = {
+  navigation: PropTypes.object,
+  news: PropTypes.object,
+  title: PropTypes.string,
+  publishedAt: PropTypes.string,
+  urlToImage: PropTypes.string
+};
 
-  render() {
-    // * Props from parent component
-    const { title, publishedAt, urlToImage } = this.props;
+function redirectToNews(navigation, news) {
+  navigation.navigate("News", { id: news.id, url: news.url });
+}
 
-    return (
-      <View>
-        <View style={styles.container}>
-          <NewsImage urlToImage={urlToImage} newscover />
-          <View style={styles.text}>
-            <TouchableOpacity
-              style={styles.title}
-              onPress={this.redirectToNews}
-            >
-              <Text>{title}</Text>
-            </TouchableOpacity>
-            <Text style={styles.date}>{publishedAt}</Text>
-          </View>
+function NewsRow(props) {
+  const { title, publishedAt, urlToImage, navigation, news } = props;
+
+  return (
+    <View>
+      <View style={styles.container}>
+        <NewsImage urlToImage={urlToImage} newscover />
+        <View style={styles.text}>
+          <TouchableOpacity
+            style={styles.title}
+            onPress={() => redirectToNews(navigation, news)}
+          >
+            <Text>{title}</Text>
+          </TouchableOpacity>
+          <Text style={styles.date}>{publishedAt}</Text>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

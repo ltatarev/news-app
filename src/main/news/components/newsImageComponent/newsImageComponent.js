@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Animated,
@@ -14,87 +14,77 @@ import PropTypes from "prop-types";
 // * Contains width and height of screen
 import size from "../../fragments/styles/size";
 
-class NewsImage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-    this.imageAnimated = new Animated.Value(0);
-    this.thumbAnimated = new Animated.Value(0);
-  }
+NewsImage.propTypes = {
+  urlToImage: PropTypes.string
+};
 
-  static propTypes = {
-    urlToImage: PropTypes.string
-  };
+// * In case image loaded successfully
+handleImageLoad = (upnext, imageAnimated, thumbAnimated) => {
+  Animated.timing(imageAnimated, {
+    toValue: upnext ? 0.7 : 1
+  }).start();
+  Animated.timing(thumbAnimated, {
+    toValue: 0
+  }).start();
+};
 
-  // * In case image loaded successfully
-  handleImageLoad = () => {
-    const { upnext } = this.props;
-    Animated.timing(this.imageAnimated, {
-      toValue: upnext ? 0.7 : 1
-    }).start();
-    Animated.timing(this.thumbAnimated, {
-      toValue: 0
-    }).start();
-    this.loadEnd();
-  };
+// * In case image didn't load
+handleThumbnailLoad = (upnext, thumbAnimated) => {
+  Animated.timing(thumbAnimated, {
+    toValue: upnext ? 0.7 : 1
+  }).start();
+};
 
-  // * In case image didn't load
-  handleThumbnailLoad = () => {
-    const { upnext } = this.props;
-    Animated.timing(this.thumbAnimated, {
-      toValue: upnext ? 0.7 : 1
-    }).start();
-    this.loadEnd();
-  };
+function NewsImage(props) {
+  const [loading, setLoading] = useState(true);
+  let imageAnimated = new Animated.Value(0);
+  let thumbAnimated = new Animated.Value(0);
 
-  // * Stop animating ActivityIndicator
-  loadEnd = () => {
-    this.setState({ loading: false });
-  };
+  const { urlToImage, newscover, upnext } = props;
 
-  render() {
-    const { urlToImage, newscover, upnext } = this.props;
+  const thumbUrl =
+    "https://images.unsplash.com/photo-1476242906366-d8eb64c2f661?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80";
 
-    const thumbUrl =
-      "https://images.unsplash.com/photo-1476242906366-d8eb64c2f661?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80";
+  useEffect(() => {
+    setLoading(false);
+  });
 
-    return (
-      <View>
-        <ActivityIndicator
-          style={[
-            styles.activity,
-            newscover && styles.newsCoverImage,
-            upnext && styles.upNext
-          ]}
-          animating={this.state.loading}
-        />
-        <Animated.Image
-          style={[
-            styles.imageOverlay,
-            { opacity: this.thumbAnimated },
-            newscover && styles.newsCoverImage,
-            upnext && styles.upNext
-          ]}
-          source={{ uri: thumbUrl }}
-          resizeMode="cover"
-        />
-        <Animated.Image
-          style={[
-            styles.imageOverlay,
-            { opacity: this.imageAnimated },
-            newscover && styles.newsCoverImage,
-            upnext && styles.upNext
-          ]}
-          source={{
-            uri: urlToImage
-          }}
-          resizeMode="cover"
-          onLoad={this.handleImageLoad}
-          onError={this.handleThumbnailLoad}
-        />
-      </View>
-    );
-  }
+  return (
+    <View>
+      <ActivityIndicator
+        style={[
+          styles.activity,
+          newscover && styles.newsCoverImage,
+          upnext && styles.upNext
+        ]}
+        animating={loading}
+      />
+      <Animated.Image
+        style={[
+          styles.imageOverlay,
+          { opacity: thumbAnimated },
+          newscover && styles.newsCoverImage,
+          upnext && styles.upNext
+        ]}
+        source={{ uri: thumbUrl }}
+        resizeMode="cover"
+      />
+      <Animated.Image
+        style={[
+          styles.imageOverlay,
+          { opacity: imageAnimated },
+          newscover && styles.newsCoverImage,
+          upnext && styles.upNext
+        ]}
+        source={{
+          uri: urlToImage
+        }}
+        resizeMode="cover"
+        onLoad={() => handleImageLoad(upnext, imageAnimated, thumbAnimated)}
+        onError={() => handleThumbnailLoad(upnext, thumbAnimated)}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

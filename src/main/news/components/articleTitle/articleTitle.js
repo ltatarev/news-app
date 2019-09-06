@@ -3,25 +3,28 @@ import { Text, View, StyleSheet } from "react-native";
 
 import size from "../../fragments/styles/size";
 
-class ArticleTitle extends Component {
-  constructor(props) {
-    super(props);
-  }
+import PropTypes from "prop-types";
 
-  render() {
-    const { title, publishedAt, author, source } = this.props;
-    return (
-      <View style={styles.container}>
-        <Text style={[styles.title, styles.text]}>{title}</Text>
-        <View style={styles.description}>
-          <Text style={[styles.author, styles.text]}>
-            {author ? author : source}
-          </Text>
-          <Text style={[styles.author, styles.text]}>{publishedAt}</Text>
-        </View>
+ArticleTitle.propTypes = {
+  title: PropTypes.string,
+  publishedAt: PropTypes.string,
+  author: PropTypes.string,
+  source: PropTypes.string
+};
+
+function ArticleTitle(props) {
+  const { title, publishedAt, author, source } = props;
+  return (
+    <View style={styles.container}>
+      <Text style={[styles.title, styles.text]}>{title}</Text>
+      <View style={styles.description}>
+        <Text style={[styles.author, styles.text]}>
+          {author ? author : source}
+        </Text>
+        <Text style={[styles.author, styles.text]}>{publishedAt}</Text>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

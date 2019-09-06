@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   Text,
   StatusBar,
@@ -41,6 +41,8 @@ function NewsScreen(props) {
 
   const [nextId, setNextId] = useState(getNextId(id, lastId));
 
+  const scrollRef = useRef().current;
+
   const [currentArticle, setCurrentArticle] = useState(news[id]);
   const [nextArticle, setNextArticle] = useState(news[nextId]);
 
@@ -48,12 +50,14 @@ function NewsScreen(props) {
     LayoutAnimation.easeInEaseOut();
     setId(id => id + 1);
     setNextId(nextId => getNextId(nextId, lastId));
-    scrollRef.scrollTo({ y: 65, animated: true, duration: 300 });
   }, []);
 
   useEffect(() => {
     setCurrentArticle(news[id]);
     setNextArticle(news[nextId]);
+    if (scrollRef) {
+      scrollRef.scrollTo({ y: 65, animated: true, duration: 300 });
+    }
   });
 
   const {
@@ -67,7 +71,7 @@ function NewsScreen(props) {
   } = currentArticle;
 
   return (
-    <ScrollView style={styles.scrollView} ref={ref => (scrollRef = ref)}>
+    <ScrollView style={styles.scrollView} ref={scrollRef}>
       <StatusBar barStyle="light-content" />
       <ArticleCover urlToImage={urlToImage} />
       <ArticleTitle

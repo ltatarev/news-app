@@ -7,39 +7,32 @@ import PropTypes from "prop-types";
 
 import { initialRequest } from "../../redux/actions";
 
-class ListEmpty extends Component {
-  constructor(props) {
-    super(props);
-    this.handlePress = this.handlePress.bind(this);
-  }
+ListEmpty.propTypes = {
+  navigation: PropTypes.object,
+  requestNewsDispatch: PropTypes.func
+};
 
-  handlePress() {
-    const { navigation, requestNewsDispatch } = this.props;
-    requestNewsDispatch();
-    navigation.navigate("Home");
-  }
+function handlePress(navigation, requestNewsDispatch) {
+  requestNewsDispatch();
+  navigation.navigate("Home");
+}
 
-  static propTypes = {
-    navigation: PropTypes.object,
-    requestNewsDispatch: PropTypes.func
-  };
+function ListEmpty(props) {
+  const text = "No news available at this moment. Please try again.";
 
-  render() {
-    const text = "No news available at this moment. Please try again.";
-    return (
-      <View style={styles.emptyContainer}>
-        <Text style={styles.emptyText}>{text}</Text>
-        <TouchableOpacity onPress={this.handlePress}>
-          <FeatherIcon
-            name="refresh-cw"
-            size={40}
-            color="black"
-            style={{ padding: 30 }}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>{text}</Text>
+      <TouchableOpacity onPress={handlePress(navigation, requestNewsDispatch)}>
+        <FeatherIcon
+          name="refresh-cw"
+          size={40}
+          color="black"
+          style={{ padding: 30 }}
+        />
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
