@@ -41,8 +41,6 @@ function NewsScreen(props) {
 
   const [nextId, setNextId] = useState(getNextId(id, lastId));
 
-  const scrollRef = useRef().current;
-
   const [currentArticle, setCurrentArticle] = useState(news[id]);
   const [nextArticle, setNextArticle] = useState(news[nextId]);
 
@@ -55,8 +53,8 @@ function NewsScreen(props) {
   useEffect(() => {
     setCurrentArticle(news[id]);
     setNextArticle(news[nextId]);
-    if (scrollRef) {
-      scrollRef.scrollTo({ y: 65, animated: true, duration: 300 });
+    if (this.scrollRef) {
+      this.scrollRef.scrollTo({ y: 65, animated: true, duration: 300 });
     }
   });
 
@@ -71,7 +69,12 @@ function NewsScreen(props) {
   } = currentArticle;
 
   return (
-    <ScrollView style={styles.scrollView} ref={scrollRef}>
+    <ScrollView
+      style={styles.scrollView}
+      ref={ref => {
+        scrollRef = ref;
+      }}
+    >
       <StatusBar barStyle="light-content" />
       <ArticleCover urlToImage={urlToImage} />
       <ArticleTitle
