@@ -7,38 +7,24 @@ import NewsImage from "../newsImageComponent/newsImageComponent";
 
 import size from "../../fragments/styles/size";
 
-class UpNextComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.handlePress = this.handlePress.bind(this);
-  }
+UpNextComponent.propTypes = {
+  article: PropTypes.object,
+  upNext: PropTypes.func
+};
 
-  handlePress() {
-    // * Go to next article
-    const { upNext, article } = this.props;
-    const { id } = article;
-    upNext(id);
-  }
+function UpNextComponent(props) {
+  const { upNextHandle, article } = props;
+  const { urlToImage, shortTitle } = article;
 
-  static propTypes = {
-    article: PropTypes.object,
-    upNext: PropTypes.func
-  };
-
-  render() {
-    const { article } = this.props;
-    const { urlToImage, shortTitle } = article;
-
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this.handlePress}>
-          <NewsImage urlToImage={urlToImage} upnext />
-          <Text style={[styles.text, styles.upNext]}>UP NEXT</Text>
-          <Text style={styles.text}>{shortTitle}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={upNextHandle}>
+        <NewsImage urlToImage={urlToImage} upnext />
+        <Text style={[styles.text, styles.upNext]}>UP NEXT</Text>
+        <Text style={styles.text}>{shortTitle}</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

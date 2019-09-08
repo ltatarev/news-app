@@ -8,7 +8,12 @@ import ShareButton from "./components/share";
 
 const AppNavigator = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: "NEWS"
+      })
+    },
     News: {
       screen: NewsScreen,
       navigationOptions: ({ navigation }) => ({

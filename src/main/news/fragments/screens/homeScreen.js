@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { View, FlatList, LayoutAnimation, StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { View, FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 
@@ -15,65 +15,48 @@ import {
   LoadingModal
 } from "../../components";
 
-class HomeScreen extends Component {
-  static navigationOptions = {
-    headerTitle: "NEWS"
-  };
+// * Prop types
+HomeScreen.propTypes = {
+  news: PropTypes.array,
+  isFetching: PropTypes.bool,
+  requestNewsDispatch: PropTypes.func
+};
 
-  constructor(props) {
-    super(props);
-    this.onRefresh = this.onRefresh.bind(this);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }
+// * Render item for flatlist
+renderItem = ({ item }) => (
+  <NewsRow
+    title={item.shortTitle}
+    publishedAt={item.publishedAt}
+    urlToImage={item.urlToImage}
+    news={item}
+  />
+);
 
-  static propTypes = {
-    news: PropTypes.array,
-    isFetching: PropTypes.bool,
-    requestNewsDispatch: PropTypes.func
-  };
+keyExtractor = (item, index) => index.toString();
 
-  onRefresh() {
-    const { requestNewsDispatch } = this.props;
+function HomeScreen(props) {
+  const { isFetching, error, news, requestNewsDispatch } = props;
+
+  if (isFetching) return <LoadingModal isFetching={isFetching} />;
+
+  if (error) return <ErrorComponent />;
+
+  useEffect(() => {
     requestNewsDispatch();
-  }
+  });
 
-  componentDidMount() {
-    const { requestNewsDispatch } = this.props;
-    // * request news upon mounting
-    requestNewsDispatch();
-  }
-
-  renderItem = ({ item }) => (
-    <NewsRow
-      title={item.shortTitle}
-      publishedAt={item.publishedAt}
-      urlToImage={item.urlToImage}
-      news={item}
-    />
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={news}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        ListEmptyComponent={<ListEmpty />}
+        onRefresh={requestNewsDispatch()}
+        refreshing={isFetching}
+      />
+    </View>
   );
-
-  keyExtractor = (item, index) => index.toString();
-
-  render() {
-    const { isFetching, news, error } = this.props;
-
-    if (isFetching) return <LoadingModal isFetching={isFetching} />;
-
-    if (error) return <ErrorComponent />;
-
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={news}
-          renderItem={this.renderItem}
-          keyExtractor={this.keyExtractor}
-          ListEmptyComponent={<ListEmpty />}
-          onRefresh={this.onRefresh}
-          refreshing={isFetching}
-        />
-      </View>
-    );
-  }
 }
 
 const styles = StyleSheet.create({
